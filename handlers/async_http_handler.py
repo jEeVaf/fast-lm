@@ -1,15 +1,4 @@
-Here is the rewritten and heavily refactored version of your `AsyncHTTPHandler`. 
 
-### Key Improvements Made:
-1. **DRY (Don't Repeat Yourself)**: The massive, duplicated `try/except` blocks in `post`, `put`, `patch`, and `delete` were extracted into a single `_execute_request` helper method.
-2. **Fixed Context Manager**: Added the missing `exc_type, exc_val, exc_tb` arguments to `__aexit__` to prevent runtime errors when using `async with`.
-3. **Dynamic Retry Method**: Renamed `single_connection_post_request` to `_single_connection_request` and made it accept the HTTP `method` so retries work correctly for PUT, PATCH, and DELETE (previously it hardcoded "POST" for all retries).
-4. **Safer Garbage Collection**: Improved `__del__` to safely check if the event loop is actually running before attempting to schedule a task, preventing `RuntimeError` warnings on shutdown.
-5. **Cleaned Imports & Type Hints**: Removed unused standard library imports and added missing type hints (like `VerifyTypes`).
-
-### Refactored Code
-
-```python
 import asyncio
 import os
 import ssl
